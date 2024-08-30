@@ -13,6 +13,9 @@ body {
     position: relative;
     min-height: 100vh; /* Full viewport height for content */
     padding: 20px; /* Optional padding for content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1; /* Ensure content is above the background */
   }
   

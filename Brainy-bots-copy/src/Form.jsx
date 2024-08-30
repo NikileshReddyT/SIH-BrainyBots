@@ -1,6 +1,7 @@
 // src/Form.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import uidai from "../public/pngegg.png"
 import "./Form.css"; // Import the CSS for styling
 
 const Form = () => {
@@ -44,10 +45,11 @@ const Form = () => {
 
   return (
     <div className='form-container'>
+      <img src={uidai} alt='uidai image' className="uidai-logo" />
       <h1>Aadhar Login</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Enter Aadhar Number:
+          Enter Aadhar Number :
           <input
             type='text'
             name='userInput' // Added name attribute
