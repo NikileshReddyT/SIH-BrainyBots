@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Interaction CAPTCHA</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #385164;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #8e999a;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 150px);
+            grid-gap: 20px;
+            padding: 20px 0;
+            justify-content: center;
+        }
+
+        .grid-container img {
+            width: 150px;
+            height: 120px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            transition: transform 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-container img.hover {
+            transform: scale(1.05);
+            border-color: #007bff;
+        }
+
+        #submitButton {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #submitButton:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            background-color: rgb(255, 255, 255);
+            margin-top: 20px;
+            color: #28a745;
+            font-size: 16px;
+            font-weight: 800;
+            width: 80%;
+            padding: 12px 10px;
+            border-radius: 20px;
+            text-align: center;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .invisible-bot-field {
+            position: absolute;
+            left: -9999px;
+            visibility: hidden;
+        }
+
+        /* Loading spinner */
+        #loadingSpinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>IMAGE - CAPTCHA</h2>
+
+    <!-- Honeypot hidden field -->
+    <input type="hidden" id="botField" class="invisible-bot-field" autocomplete="off">
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner"></div>
+
+    <!-- Image Grid -->
+    <div class="grid-container">
+        <img id="image1" src="./images/building_shadow_left.png" data-shadow="left" alt="Image with shadow on the left">
+        <img id="image2" src="./images/building_shadow_back.png" data-shadow="back" alt="Image with shadow at the back">
+        <img id="image3" src="./images/building_shadow_front.png" data-shadow="front" alt="Image with shadow at the front">
+        <img id="image4" src="./images/building_shadow_right.png" data-shadow="right" alt="Image with shadow on the right">
+    </div>
+
+    <!-- Submit Button -->
+    <button id="submitButton">Submit</button>
+
+    <!-- Message Area -->
+    <div id="messageArea" class="message"></div>
+</div>
+
+<script>
+    let botActive = true;
+    let selectedImage = null;
+
+    function displayMessage(message, isError = false) {
+        const messageArea = document.getElementById('messageArea');
+        messageArea.innerText = message;
+        messageArea.style.color = isError ? 'red' : '#28a745';
+        messageArea.style.transform = isError ? 'scale(1.1)' : 'scale(1)';
+    }
+
+    function hoverOverImage(image) {
+        image.classList.add('hover');
+    }
+
+    function removeHoverFromAllImages() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => img.classList.remove('hover'));
+    }
+
+    function handleCaptchaSubmission() {
+        const images = document.querySelectorAll('img');
+        let correctImage = null;
+        let incorrectImage = null;
+
+        // Find the correct image and one incorrect image
+        images.forEach(image => {
+            if (image.getAttribute('data-shadow') === 'left') {
+                correctImage = image;
+            } else if (!incorrectImage) {
+                incorrectImage = image;
+            }
+        });
+
+        // Simulate a hover effect on all images before selecting
+        images.forEach((image, index) => {
+            setTimeout(() => {
+                // Simulate hovering over each image
+                image.classList.add('hover');
+                setTimeout(() => {
+                    image.classList.remove('hover');
+                }, 1000); // Hover for 1 second
+            }, index * 1000); // Delay between each image hover
+        });
+
+        // Select either the correct image or one incorrect image
+        setTimeout(() => {
+            if (Math.random() > 0.5 && correctImage) {
+                // 50% chance to select the correct image
+                selectedImage = correctImage;
+                correctImage.click();
+                displayMessage('Image with shadow on the left selected!');
+            } else if (incorrectImage) {
+                // Select the incorrect image
+                selectedImage = incorrectImage;
+                incorrectImage.click();
+                displayMessage('Incorrect image selected.', true);
+            }
+            // Apply hover effect to the selected image
+            if (selectedImage) {
+                hoverOverImage(selectedImage);
+            }
+        }, images.length * 1000); // Delay to allow all hovers to finish
+
+        setTimeout(() => {
+            displayMessage('Submitting CAPTCHA...');
+        }, images.length * 1000 + 1000); // Total time for all hover actions + additional time before submission
+    }
+
+    document.getElementById('submitButton').addEventListener('click', function() {
+        if (botActive) {
+            if (selectedImage && selectedImage.getAttribute('data-shadow') === 'left') {
+                displayMessage('Bot detected: correct image selected.');
+            } else if (selectedImage) {
+                displayMessage('Bot detected: incorrect image selected.', true);
+            }
+        } else {
+            displayMessage('CAPTCHA submitted!');
+        }
+    });
+
+    window.onload = function() {
+        handleCaptchaSubmission();
+    };
+</script>
+</body>
+</html>

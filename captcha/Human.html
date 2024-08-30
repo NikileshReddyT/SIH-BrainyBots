@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Interaction CAPTCHA</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #385164;  /* Light blue background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #8e999a;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 150px);  /* 2 columns, each 150px wide */
+            grid-gap: 20px;  /* Space between images */
+            padding: 20px 0;
+            justify-content: center;  /* Center the grid */
+        }
+
+        .grid-container img {
+            width: 150px;  /* Set width to 150px */
+            height: 120px; /* Set height to 120px */
+            cursor: pointer;
+            border: 3px solid transparent;
+            border-radius: 5px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .grid-container img:hover {
+            transform: scale(1.05);  /* Slight zoom effect on hover */
+            border-color: #007bff;  /* Blue border on hover */
+        }
+
+        #submitButton {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submitButton:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #28a745;
+            font-size: 16px;
+        }
+
+        .invisible-bot-field {
+            position: absolute;
+            left: -9999px;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>IMAGE - CAPTCHA</h2>
+
+    <!-- Honeypot hidden field -->
+    <input type="hidden" id="botField" class="invisible-bot-field" autocomplete="off">
+
+    <!-- Image Grid -->
+    <div class="grid-container">
+        <img id="image1" src="./images/building_shadow_left.png" data-shadow="left" alt="Image with shadow on left">
+        <img id="image2" src="./images/building_shadow_back.png" data-shadow="back" alt="Image with shadow at back">
+        <img id="image3" src="./images/building_shadow_front.png" data-shadow="front" alt="Image with shadow at front">
+        <img id="image4" src="./images/building_shadow_right.png" data-shadow="right" alt="Image with shadow on right">
+    </div>
+
+    <!-- Submit Button -->
+    <button id="submitButton">Submit</button>
+
+    <!-- Message Area -->
+    <div id="messageArea" class="message"></div>
+</div>
+
+<script>
+    // Simulate realistic user interaction by randomizing delays
+    const images = document.querySelectorAll('.grid-container img');
+    let selectedImage = null;
+
+    // Handle image clicks to provide visual feedback (hover effect)
+    images.forEach(image => {
+        image.addEventListener('click', function() {
+            images.forEach(img => img.style.borderColor = 'transparent');  // Reset borders
+            image.style.borderColor = '#007bff';  // Highlight selected image
+            selectedImage = image;
+        });
+    });
+
+    // Handle submit button click with a simulated delay
+    document.getElementById('submitButton').addEventListener('click', function() {
+        const messageArea = document.getElementById('messageArea');
+
+        if (selectedImage) {
+            // Simulate human-like delay before showing result
+            setTimeout(() => {
+                const shadow = selectedImage.getAttribute('data-shadow');
+                if (shadow === 'left') {
+                    messageArea.innerText = 'Correct! CAPTCHA passed.';
+                    messageArea.style.color = 'green';
+                } else {
+                    messageArea.innerText = 'Incorrect! Please try again.';
+                    messageArea.style.color = 'red';
+                }
+            }, Math.random() * 1500 + 500);  // Random delay between 500ms and 2s
+        } else {
+            messageArea.innerText = 'Please select an image before submitting.';
+            messageArea.style.color = 'red';
+        }
+    });
+
+    // Simulate scrolling (optional, for visual effect)
+    window.onload = function() {
+        setTimeout(() => {
+            window.scrollBy(0, 100);
+        }, Math.random() * 1500 + 500);  // Random delay between 500ms and 2s
+    };
+</script>
+
+</body>
+</html>
