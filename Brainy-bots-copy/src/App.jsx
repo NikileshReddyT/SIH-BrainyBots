@@ -8,6 +8,7 @@ import {
 import HumanBotForm from "./Form";
 import SuccessPage from "./SuccessPage";
 import ErrorPage from "./ErrorPage";
+import './App.css'; // Import the CSS file
 
 const App = () => {
   return (
@@ -23,7 +24,5 @@ const App = () => {
     </div>
   );
 };
-
-
 
 export default App;
