@@ -1,0 +1,98 @@
+/* Form.css */
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .result-page {
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  /* Success Page Styles */
+  .result-title.success {
+    color: #28a745; /* Green color for success */
+    font-size: 2rem;
+    margin-bottom: 10px;
+    animation: fadeInSuccess 1s ease-in-out;
+  }
+  
+  .result-message {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .result-page.success {
+    border: 2px solid #28a745; /* Green border */
+    background-color: #e6f9ed; /* Light green background */
+  }
+  
+  /* Error Page Styles */
+  .result-title.error {
+    color: #dc3545; /* Red color for error */
+    font-size: 2rem;
+    margin-bottom: 10px;
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  .result-page.error {
+    border: 2px solid #dc3545; /* Red border */
+    background-color: #fde8e8; /* Light red background */
+  }
+  
+  /* Animations */
+  @keyframes fadeInSuccess {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-10px);
+    }
+    50% {
+      transform: translateX(10px);
+    }
+    75% {
+      transform: translateX(-10px);
+    }
+  }
+  
+  /* Button Styles (if needed) */
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #555;
+  }
+  
