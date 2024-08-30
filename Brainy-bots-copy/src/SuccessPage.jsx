@@ -3,12 +3,12 @@ import "./successanderror.css";
 
 const SuccessPage = () => {
   return (
-    <div className="result-main-div">
+    <div className='result-main-div'>
       <div className='result-page'>
         <h2 className='result-title success'>
-          Success!<br></br>
+          Succesfully Logged into UIDAI<br></br>
         </h2>
-        <p className='result-message'>You have been verified as a human.</p>
+        <p className='result-message'>Your details are stored safely.</p>
       </div>
     </div>
   );
