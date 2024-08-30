@@ -44,10 +44,10 @@ const Form = () => {
 
   return (
     <div className='form-container'>
-      <h1>Bot Detection Form</h1>
+      <h1>Aadhar Login</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Enter something:
+          Enter Aadhar Number:
           <input
             type='text'
             name='userInput' // Added name attribute
