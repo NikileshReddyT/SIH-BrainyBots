@@ -9,6 +9,7 @@ import HumanBotForm from "./Components/Form";
 import SuccessPage from "./Components/SuccessPage";
 import ErrorPage from "./Components/ErrorPage";
 import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 import './app.css';
 
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path='/error' element={<ErrorPage />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );
