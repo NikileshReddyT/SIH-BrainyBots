@@ -1,7 +1,0 @@
-.root {
-    position: relative;
-    min-height: 100vh;/* Full viewport height */
-    padding: 20px; /* Optional padding */
-    overflow: hidden; /* Ensures no scrollbars appear due to pseudo-element */
-  }
-  
