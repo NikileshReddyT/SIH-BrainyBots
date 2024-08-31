@@ -1,7 +1,6 @@
 .app {
     position: relative;
     min-height: 100vh; /* Full viewport height for content */
-    padding: 20px; /* Optional padding for content */
     display: flex;
     width: 100%;
     justify-content: center;

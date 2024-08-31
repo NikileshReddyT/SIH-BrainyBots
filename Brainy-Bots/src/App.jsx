@@ -8,13 +8,16 @@ import {
 import HumanBotForm from "./Components/Form";
 import SuccessPage from "./Components/SuccessPage";
 import ErrorPage from "./Components/ErrorPage";
+import Navbar from "./Components/Navbar";
 import './app.css';
+
 
 
 const App = () => {
   return (
     <div className='app'>
       <Router>
+        <Navbar />
         <Routes>
           <Route path='/' element={<HumanBotForm />} />
           <Route path='/success' element={<SuccessPage />} />
