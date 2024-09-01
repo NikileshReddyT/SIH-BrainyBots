@@ -6,7 +6,7 @@
     justify-content: space-between; /* Center navbar content */
     align-items: center;
     padding: 5px 20px;
-    background-color: #c9c0c0; /* Semi-transparent background */
+    background-color: #c9c0c068; /* Semi-transparent background */
     color: #fff;
     width: 100%;
     border-radius: 8px; /* Rounded corners for a modern look */
